@@ -102,5 +102,42 @@ cartItemsContainer.addEventListener('click', function (e) {
     const name = event.target.getAttribute('data-name')
 
     console.log(name)
+    removeItemCart(name)
+  }
+})
+
+function removeItemCart(name) {
+  const index = cart.findIndex((item) => item.name === name)
+
+  if (index !== -1) {
+    const item = cart[index]
+
+    if (item.quantity > 1) {
+      item.quantity -= 1
+      updateCartModal()
+      return
+    } else {
+      cart.splice(index, 1)
+    }
+  }
+}
+
+addressInput.addEventListener('input', function (event) {
+  let inputValue = event.target.value
+
+  if (inputValue !== '') {
+    addressInput.classList.remove('border-red-500')
+    addressWarn.classList.add('hidden')
+  }
+})
+
+checkoutBtn.addEventListener('click', function (event) {
+  if (cart.length === 0) return
+
+  if (addressInput.value === '') {
+    addressWarn.classList.remove('hidden')
+    addressInput.classList.add('border-red-500')
+
+    return
   }
 })
